@@ -2,8 +2,8 @@
 
 import fs from 'fs'
 import path from 'path'
-import { exec } from '../src/exec.ts'
 import { assign, values } from 'utils'
+import { exec } from '../src/exec.ts'
 
 let visited = new Set()
 
