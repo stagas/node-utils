@@ -74,39 +74,6 @@ export const run = async () => {
       }
     }
   }
-
-  // const deps = gatherDependants(process.cwd())
-
-  // for (const name in deps) {
-  //   const resolved = deps[name]
-
-  //   const vars = {
-  //     pwd: resolved,
-  //     base: path.basename(resolved),
-  //   }
-
-  //   const argv = process.argv.slice(2)
-  //   if (!argv.length) argv.push('echo', '%base')
-  //   const [cmd, ...args] = argv.map(x =>
-  //     Object.entries(vars).reduce(
-  //       (p, [key, val]) => {
-  //         return p.replace(`%${key}`, val)
-  //       },
-  //       x
-  //     )
-  //   )
-
-  //   console.log(`\x1b[1m\x1b[32m${resolved}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
-  //   try {
-  //     await exec(cmd, args, {
-  //       cwd: resolved
-  //     })
-  //   }
-  //   catch (e) {
-  //     console.error(e)
-  //   }
-  //   console.log()
-  // }
 }
 
 run()
