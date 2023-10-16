@@ -14,6 +14,7 @@ export const run = async () => {
   const argv = process.argv.slice(2)
   if (!argv.length) argv.push('echo', '%base')
 
+  let errored: any[] = []
   for (const dir of dirs) {
     try {
       const pkgPath = path.join(parent, dir.name)
@@ -35,11 +36,17 @@ export const run = async () => {
           )
         )
 
-        console.log(`\x1b[1m\x1b[32m${pkgPath}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
-        await exec(cmd, args, {
-          cwd: pkgPath
-        })
-        console.log()
+        try {
+
+          console.log(`\x1b[1m\x1b[32m${pkgPath}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
+          await exec(cmd, args, {
+            cwd: pkgPath
+          })
+          console.log()
+        }
+        catch (e) {
+          errored.push(pkgPath)
+        }
       }
     }
     catch (e) {
@@ -48,6 +55,11 @@ export const run = async () => {
         console.error(e)
       }
     }
+  }
+
+  if (errored.length) {
+    console.log('Errors found (%d):', errored.length)
+    console.log('  ' + errored.join('\n  '))
   }
 }
 
