@@ -37,10 +37,9 @@ export const run = async () => {
         )
 
         console.log(`\x1b[1m\x1b[32m${pkgPath}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
-        const output = await exec([cmd, args].join(' '), {
+        await exec([cmd, args].join(' '), {
           cwd: pkgPath
         })
-        console.log(output)
         console.log()
       }
     }
