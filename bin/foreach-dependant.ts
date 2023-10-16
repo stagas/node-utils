@@ -3,9 +3,6 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from '../src/exec.js'
-import { assign, values } from 'utils'
-
-let visited = new Set()
 
 export const run = async () => {
   const pwd = process.cwd()
