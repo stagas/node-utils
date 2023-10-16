@@ -1,0 +1,45 @@
+{
+  "include": [
+    "ambient.d.ts",
+    "src",
+    "examples"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": [
+      "bun-types"
+    ],
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "noEmit": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+    "exactOptionalPropertyTypes": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "noErrorTruncation": true,
+    "noImplicitThis": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "strict": true,
+    // "noUncheckedIndexedAccess": true,
+    // "isolatedModules": true,
+    // "noUnusedLocals": true,
+  }
+}
