@@ -60,7 +60,7 @@ export const run = async () => {
   }
 
   if (errored.length) {
-    console.log('\x1b[31mErrors found (%d):\x1b[0m', errored.length)
+    console.log(`\x1b[31mErrors found (${errored.length}):\x1b[0m`)
     console.log('  ' + errored.join('\n  '))
     console.log()
   }
