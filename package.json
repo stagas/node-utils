@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.ts",
   "bin": {
-    "foreach-local-dep": "src/foreach-local-dep.ts"
+    "foreach-local-dep": "bin/foreach-local-dep.ts",
+    "foreach-dependant": "bin/foreach-dependant.ts"
   },
   "type": "module",
   "author": "",

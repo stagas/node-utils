@@ -2,12 +2,12 @@
 
 import fs from 'fs'
 import path from 'path'
-import { exec } from './exec.ts'
+import { exec } from '../src/exec.js'
 import { assign, values } from 'utils'
 
 let visited = new Set()
 
-function gatherLocalDeps(pkgPath: string, deps: Record<string, string> = {}) {
+function gatherDependants(pkgPath: string, deps: Record<string, string> = {}) {
   if (visited.has(pkgPath)) return deps
   visited.add(pkgPath)
 
@@ -23,7 +23,7 @@ function gatherLocalDeps(pkgPath: string, deps: Record<string, string> = {}) {
     if (!value.startsWith('file:')) return
     const relPath = value.split('file:').pop()!
     const absPath = path.resolve(pkgPath, relPath)
-    gatherLocalDeps(absPath, deps)
+    gatherDependants(absPath, deps)
   })
 
   deps[pkg.name] = pkgPath
@@ -31,38 +31,82 @@ function gatherLocalDeps(pkgPath: string, deps: Record<string, string> = {}) {
 }
 
 export const run = async () => {
-  const deps = gatherLocalDeps(process.cwd())
+  const pwd = process.cwd()
+  const base = path.basename(pwd)
+  const parent = path.resolve(pwd, '..')
+  const dirs = fs.readdirSync(parent, { withFileTypes: true }).filter(x => x.isDirectory())
 
-  for (const name in deps) {
-    const resolved = deps[name]
+  const argv = process.argv.slice(2)
+  if (!argv.length) argv.push('echo', '%base')
 
-    const vars = {
-      pwd: resolved,
-      base: path.basename(resolved),
-    }
-
-    const argv = process.argv.slice(2)
-    if (!argv.length) argv.push('echo', '%base')
-    const [cmd, ...args] = argv.map(x =>
-      Object.entries(vars).reduce(
-        (p, [key, val]) => {
-          return p.replace(`%${key}`, val)
-        },
-        x
-      )
-    )
-
-    console.log(`\x1b[1m\x1b[32m${resolved}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
+  for (const dir of dirs) {
     try {
-      await exec(cmd, args, {
-        cwd: resolved
-      })
+      const pkgPath = path.join(parent, dir.name)
+      const pkg: any = JSON.parse(fs.readFileSync(path.join(pkgPath, 'package.json'), 'utf-8'))
+      if (Object.values(pkg.dependencies ?? {})
+        .concat(Object.values(pkg.devDependencies ?? {}))
+        .includes('file:../' + base) || dir.name === base) {
+
+        const vars = {
+          pwd: pkgPath,
+          base: path.basename(pkgPath),
+        }
+        const [cmd, ...args] = argv.map(x =>
+          Object.entries(vars).reduce(
+            (p, [key, val]) => {
+              return p.replace(`%${key}`, val)
+            },
+            x
+          )
+        )
+
+        console.log(`\x1b[1m\x1b[32m${pkgPath}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
+        await exec(cmd, args, {
+          cwd: pkgPath
+        })
+        console.log()
+      }
     }
     catch (e) {
-      console.error(e)
+      const err = e as Error
+      if (!err.message.includes('No such file')) {
+        console.error(e)
+      }
     }
-    console.log()
   }
+
+  // const deps = gatherDependants(process.cwd())
+
+  // for (const name in deps) {
+  //   const resolved = deps[name]
+
+  //   const vars = {
+  //     pwd: resolved,
+  //     base: path.basename(resolved),
+  //   }
+
+  //   const argv = process.argv.slice(2)
+  //   if (!argv.length) argv.push('echo', '%base')
+  //   const [cmd, ...args] = argv.map(x =>
+  //     Object.entries(vars).reduce(
+  //       (p, [key, val]) => {
+  //         return p.replace(`%${key}`, val)
+  //       },
+  //       x
+  //     )
+  //   )
+
+  //   console.log(`\x1b[1m\x1b[32m${resolved}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
+  //   try {
+  //     await exec(cmd, args, {
+  //       cwd: resolved
+  //     })
+  //   }
+  //   catch (e) {
+  //     console.error(e)
+  //   }
+  //   console.log()
+  // }
 }
 
 run()

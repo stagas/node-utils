@@ -2,8 +2,11 @@
   "include": [
     "ambient.d.ts",
     "src",
+    "bin",
     "examples"
-  ],
+,
+"bin/foreach-dependant.ts"
+],
   "exclude": [
     "node_modules"
   ],
