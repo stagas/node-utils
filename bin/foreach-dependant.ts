@@ -7,29 +7,6 @@ import { assign, values } from 'utils'
 
 let visited = new Set()
 
-function gatherDependants(pkgPath: string, deps: Record<string, string> = {}) {
-  if (visited.has(pkgPath)) return deps
-  visited.add(pkgPath)
-
-  const pkg: any = JSON.parse(fs.readFileSync(path.join(pkgPath, 'package.json'), 'utf-8'))
-
-  values(
-    assign<Record<string, string>>(
-      pkg.dependencies ?? {},
-      pkg.devDependencies,
-      pkg.peerDependencies,
-    )
-  ).forEach(value => {
-    if (!value.startsWith('file:')) return
-    const relPath = value.split('file:').pop()!
-    const absPath = path.resolve(pkgPath, relPath)
-    gatherDependants(absPath, deps)
-  })
-
-  deps[pkg.name] = pkgPath
-  return deps
-}
-
 export const run = async () => {
   const pwd = process.cwd()
   const base = path.basename(pwd)
