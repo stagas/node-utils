@@ -20,6 +20,7 @@
     "test": "utr src/index.ts"
   },
   "dependencies": {
+    "get-pty-output": "*",
     "utils": "file:../utils"
   }
 }
