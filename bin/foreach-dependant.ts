@@ -3,6 +3,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from '../src/exec.js'
+import { values } from 'utils'
 
 export const run = async () => {
   const pwd = process.cwd()
@@ -17,8 +18,8 @@ export const run = async () => {
     try {
       const pkgPath = path.join(parent, dir.name)
       const pkg: any = JSON.parse(fs.readFileSync(path.join(pkgPath, 'package.json'), 'utf-8'))
-      if (Object.values(pkg.dependencies ?? {})
-        .concat(Object.values(pkg.devDependencies ?? {}))
+      if (values(pkg.dependencies ?? {})
+        .concat(values(pkg.devDependencies ?? {}))
         .includes('file:../' + base) || dir.name === base) {
 
         const vars = {
