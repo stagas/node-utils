@@ -20,7 +20,6 @@ export const run = async () => {
       const pkgPath = path.join(parent, dir.name)
       const pkg: any = JSON.parse(fs.readFileSync(path.join(pkgPath, 'package.json'), 'utf-8'))
       if (values(pkg.dependencies ?? {})
-        .concat(values(pkg.devDependencies ?? {}))
         .includes('file:../' + base) || dir.name === base) {
 
         const vars = {
