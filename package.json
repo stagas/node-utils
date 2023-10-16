@@ -14,5 +14,8 @@
   },
   "scripts": {
     "test": "utr src/index.ts"
+  },
+  "dependencies": {
+    "utils": "file:../utils"
   }
 }
