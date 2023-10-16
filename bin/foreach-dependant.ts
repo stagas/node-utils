@@ -2,9 +2,8 @@
 
 import fs from 'fs'
 import path from 'path'
-// import { exec } from '../src/exec.ts'
+import { exec } from '../src/exec.ts'
 import { values } from 'utils'
-import { exec } from 'get-pty-output'
 
 export const run = async () => {
   const pwd = process.cwd()
@@ -37,7 +36,7 @@ export const run = async () => {
         )
 
         console.log(`\x1b[1m\x1b[32m${pkgPath}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
-        await exec([cmd, args].join(' '), {
+        await exec(cmd, args, {
           cwd: pkgPath
         })
         console.log()
