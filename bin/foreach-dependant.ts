@@ -2,8 +2,8 @@
 
 import fs from 'fs'
 import path from 'path'
-import { exec } from '../src/exec.ts'
 import { values } from 'utils'
+import { exec } from '../src/exec.ts'
 
 export const run = async () => {
   const pwd = process.cwd()
