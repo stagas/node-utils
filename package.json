@@ -17,7 +17,7 @@
     "bun-types": "*"
   },
   "scripts": {
-    "test": "utr src/index.ts"
+    "test": "utr --node src/index.ts"
   },
   "dependencies": {
     "utils": "file:../utils"
