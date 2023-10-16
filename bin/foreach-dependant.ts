@@ -2,7 +2,7 @@
 
 import fs from 'fs'
 import path from 'path'
-import { exec } from '../src/exec.js'
+import { exec } from '../src/exec.ts'
 import { values } from 'utils'
 
 export const run = async () => {
