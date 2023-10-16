@@ -62,6 +62,7 @@ export const run = async () => {
   if (errored.length) {
     console.log('Errors found (%d):', errored.length)
     console.log('  ' + errored.join('\n  '))
+    console.log()
   }
 }
 
