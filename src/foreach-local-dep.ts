@@ -41,15 +41,16 @@ export const run = async () => {
       base: path.basename(resolved),
     }
 
-    const [cmd, ...args] = process.argv.map(x =>
+    const argv = process.argv.slice(2)
+    if (!argv.length) argv.push('echo', '%base')
+    const [cmd, ...args] = argv.map(x =>
       Object.entries(vars).reduce(
         (p, [key, val]) => {
           return p.replace(`%${key}`, val)
         },
         x
       )
-    ).slice(2)
-
+    )
 
     console.log(`\x1b[1m\x1b[32m${resolved}:\x1b[0m \x1b[1m\x1b[36m${cmd} ${args.map(x => `"${x}"`).join(' ')}\x1b[0m`)
     try {

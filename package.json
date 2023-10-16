@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
+  "bin": {
+    "foreach-local-dep": "src/foreach-local-dep.ts"
+  },
   "type": "module",
   "author": "",
   "keywords": [],
