@@ -24,10 +24,10 @@ const extensions = [
 ]
 
 export interface EachDepOptions {
-  entrySource?: string
-  external?: boolean
-  alias?: Record<string, string>
-  cache?: Map<string, { source?: string; ids?: (readonly [string, string])[] }>
+  entrySource?: string | undefined
+  external?: boolean | undefined
+  alias?: Record<string, string> | undefined
+  cache?: Map<string, { source?: string; ids?: (readonly [string, string])[] }> | undefined
 }
 
 export async function* eachDep(
