@@ -1,25 +1,23 @@
 {
   "name": "node-utils",
+  "author": "stagas",
   "version": "1.0.0",
-  "description": "",
+  "description": "Misc node.js utilities.",
+  "type": "module",
   "main": "src/index.ts",
   "bin": {
     "foreach-local-dep": "bin/foreach-local-dep.ts",
     "foreach-dependant": "bin/foreach-dependant.ts"
   },
-  "type": "module",
-  "author": "",
-  "keywords": [],
-  "devDependencies": {
-    "@total-typescript/ts-reset": "*",
-    "@types/jest": "*",
-    "@types/node": "*",
-    "bun-types": "*"
-  },
   "scripts": {
     "test": "utr --no src/index.ts"
   },
+  "devDependencies": {
+    "ambient-dts": "github:stagas/ambient-dts",
+    "@types/node": "*",
+    "bun-types": "*"
+  },
   "dependencies": {
-    "utils": "file:../utils"
+    "utils": "github:stagas/utils"
   }
 }

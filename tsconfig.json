@@ -1,20 +1,10 @@
 {
   "include": [
-    "ambient.d.ts",
     "src",
-    "bin",
-    "examples"
-,
-"bin/foreach-dependant.ts"
-],
-  "exclude": [
-    "node_modules"
+    "bin"
   ],
   "compilerOptions": {
     "rootDir": ".",
-    "types": [
-      "bun-types"
-    ],
     "lib": [
       "ESNext",
       "DOM",
@@ -33,16 +23,23 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noErrorTruncation": true,
     "noImplicitThis": true,
+    // "noUncheckedIndexedAccess": true,
+    // "isolatedModules": true,
+    // "inlineSources": true,
+    // "declaration": true,
+    // "noUnusedLocals": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "allowJs": true,
     "strict": true,
-    // "noUncheckedIndexedAccess": true,
-    // "isolatedModules": true,
-    // "noUnusedLocals": true,
+    "types": [
+      "ambient-dts",
+      "@types/node",
+      "bun-types"
+    ]
   }
 }
