@@ -3,6 +3,7 @@
   "author": "stagas",
   "version": "1.0.0",
   "description": "Misc node.js utilities.",
+  "license": "AGPLv3",
   "type": "module",
   "main": "src/index.ts",
   "bin": {
